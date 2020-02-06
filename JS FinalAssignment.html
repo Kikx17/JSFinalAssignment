@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head> <!-- Tässä määritellään sivun titteli, skaalautuvuus näytölle, merkistö ja tyylit-->
+		<title>JS loppuharkka</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="jquery.js"></script>
+	</head>
+	
+	<body>
+	<div class="container"> <!--diviin sivun sisältö kokonaisuudessaan -->
+		<div id="sisalto"> <!--divi jossa otsikko, ohje, tekstikenttä ja nappi -->
+			<h1>JS loppuharkka</h1>
+			Syötä komento ("listaa kaikki" listaa kaikki komennot.)
+			<input type="text" id="textBox"><br>
+			<button onclick="mene()" class="myBtn" id="myBtn">Go</button>
+			
+			<div class="printti"> <!--diviin paragraph väärää komentoa varten -->
+				<p id="pprintti"> </p>
+			</div>
+		</div>
+
+		<div id="ikkuna" class="ikkuna"> <!--popupin divi-->
+			<div class="ikkuna-content">
+				<p id="popUp"></p>
+				<span class="close">Palaa</span>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		var komennot = ["Listaa kaikki", 
+						"tomppa",
+						"google",
+						"sukkula",
+						"tojota",
+						"rakettipupu",
+						"ryzen",
+						"avatar",
+						"aprilia",
+						"peranurkka"]; //lisätään käytössä olevat komennot arrayhin
+						
+		var i, text, k = komennot.length; //alustetaan tarvittavat muuttujat
+		var ikkuna = document.getElementById('ikkuna');
+		var btn = document.getElementById("myBtn");
+		var span = document.getElementsByClassName("close")[0];
+
+
+		span.onclick = function() { // paluu napin funktio, lopussa poistetaan popup
+			ikkuna.style.display = "none";
+			document.getElementById("popUp").innerHTML ='';
+		}
+
+		
+		function mene () {
+		document.getElementById("pprintti").innerHTML =''; // väärien komentojen printti pois
+		document.getElementById("popUp").innerHTML =''; // tyhjennetään popup
+
+			var x = document.getElementById("textBox").value;	//teksti muuttujaan x
+			if (x != '') { //jos tekstikenttä ei ole tyhjä niin ->
+				x = x.split(' ').join('') // poistetaan mahdolliset välilyönnit tekstikentästä
+				x = x.toLowerCase(); // tekstin kaikki komennot pienillä kirjaimilla
+				
+					if(typeof toiminnot[x] == 'function') { // jos annettu teksti on sallittu komento niin käytetään sitä
+						toiminnot[x](); 
+					} 
+						else { // jos ei niin printataan printtiin että ei toimi
+							document.getElementById("pprintti").innerHTML = "Väärä komento, tässä toimivat komennot: ";
+								toiminnot.vaara();
+						}		
+			} 
+		}
+		
+		var toiminnot = { // tässä on ne 10 komentoa etc
+
+				google: function() {
+					ikkuna.style.display = "block";
+					text = "Siirrytäänkö Googleen?<br>";
+					text += " <a class='googleen' href='https://www.google.com' target='_blank'>Kyllä</a>"
+					document.getElementById("popUp").innerHTML = text;	
+
+				},
+
+				listaakaikki: function() {	
+					ikkuna.style.display = "block";
+					text = "<ul>";
+					for (i= 0; i < k; i++) { //listataan komennot
+							text += "<li>" + komennot[i] + "</li>";
+						}
+					text +="</ul>"
+					document.getElementById("popUp").innerHTML = text;	
+				},
+
+				vaara: function() {	
+					text = "<ul>";
+					for (i= 0; i < k; i++) { //tulostaa komennot sivulle
+						text += "<li>" + komennot[i] + "</li>";
+						}
+					text +="</ul>"
+					document.getElementById("pprintti").innerHTML += text;	
+				},
+
+				tomppa: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='https://scontent.fqlf1-1.fna.fbcdn.net/v/t1.0-9/15230622_1317839448247554_6916261792891933556_n.jpg?_nc_cat=0&oh=89a5d466d519ea08083eec1867e1616c&oe=5B4185BA' height='200' width='200'>";
+					text += "<p>Facesta.</p>";
+					document.getElementById("popUp").innerHTML = text; 
+				},
+
+				sukkula: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='http://www.equnit.com/EVO/pics/images/onikyan-evo.jpg' height='300' width='550' alt='Mitsu Lancer Evo, eli 'sukkula''>";
+					document.getElementById("popUp").innerHTML = text; 
+				},
+
+				tojota: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='https://images.toyota-europe.com/eu/gt/width/1200/exterior-3.jpg height='300' width='550' alt='Toyota GT86'>";
+					document.getElementById("popUp").innerHTML += text; 
+				},
+
+				rakettipupu: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='https://i.pinimg.com/originals/aa/40/d3/aa40d327ca90e9b2753223434495665e.jpg' height='300' width='550' alt='Rocket bunny bodykit'>";
+					document.getElementById("popUp").innerHTML = text; 
+				},
+
+				ryzen: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='https://2g7olk2vfh2j2rs2hrid1l21-wpengine.netdna-ssl.com/wp-content/uploads/2017/02/amd-ryzen-980x430.jpg' alt='ryzen logo' height='500' width='600'>";
+					document.getElementById("popUp").innerHTML = text;	
+				},
+
+				avatar: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='http://www.powerlineaudio.fi/tuotekuvat/700x500/avatar-svl-15d1-d2.jpg' alt='Avatar subi'>";
+					document.getElementById("popUp").innerHTML = text;	
+				},
+
+				aprilia: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='https://www.scproject-shop.com/images/products/1383142872-aprilia_rsv4_scproject_rsv_aprilia_gp_exhaust_carbon_fiber_rsv4_aprc.jpg' height='300' width='550' alt='Aprilia moottoripyörä'>";
+					document.getElementById("popUp").innerHTML = text;	
+				},
+
+				peranurkka: function  () {
+					ikkuna.style.display = "block";
+					text = "<img src='https://pbs.twimg.com/profile_images/744474315932983296/-VEn8hJf_400x400.jpg' alt='Team #Peränurkka logo'>";
+					document.getElementById("popUp").innerHTML = text; 
+				}
+
+		};
+	</script>
+	</body>
+</html>
